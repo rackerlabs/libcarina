@@ -120,7 +120,8 @@ func (n *number) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func newClusterClient(endpoint string, ao gophercloud.AuthOptions) (*ClusterClient, error) {
+// NewClusterClientAO straight from gophercloud.AuthOptions
+func NewClusterClientAO(endpoint string, ao gophercloud.AuthOptions) (*ClusterClient, error) {
 	provider, err := rackspace.AuthenticatedClient(ao)
 	if err != nil {
 		return nil, err
@@ -142,7 +143,7 @@ func NewClusterClient(endpoint, username, apikey string) (*ClusterClient, error)
 		IdentityEndpoint: rackspace.RackspaceUSIdentity,
 	}
 
-	return newClusterClient(endpoint, ao)
+	return NewClusterClientAO(endpoint, ao)
 }
 
 // NewRequest handles a request using auth used by Carina
