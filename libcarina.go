@@ -54,10 +54,10 @@ type Cluster struct {
 	// UUID of image to use for cluster, should be a default value currently
 	Image string `json:"image,omitempty"`
 
-	// Node is optional, but allowed on create
+	// Segment is optional, but allowed on create
 	// Sadly it comes back as string instead of int in all cases
 	// with the API
-	Nodes Number `json:"nodes,omitempty"`
+	Segments Number `json:"nodes,omitempty"`
 
 	AutoScale bool   `json:"autoscale,omitempty"`
 	Status    string `json:"status,omitempty"`
@@ -386,10 +386,10 @@ func fetchZip(zipurl string) (*zip.Reader, error) {
 	return zip.NewReader(b, int64(b.Len()))
 }
 
-// Grow increases a cluster by the provided number of nodes
-func (c *ClusterClient) Grow(clusterName string, nodes int) (*Cluster, error) {
+// Grow increases a cluster by the provided number of segments
+func (c *ClusterClient) Grow(clusterName string, segments int) (*Cluster, error) {
 	incr := map[string]int{
-		"nodes": nodes,
+		"nodes": segments,
 	}
 
 	growthRequest, err := json.Marshal(incr)
